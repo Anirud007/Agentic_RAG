@@ -1,0 +1,40 @@
+# Core API
+fastapi
+uvicorn
+uvloop
+
+# Document processing
+PyMuPDF
+python-docx
+python-pptx
+pandas
+openpyxl
+
+# LLM & RAG
+langchain
+langchain_core
+langchain_ollama
+langgraph
+
+# Embeddings & Reranking
+torch
+sentence-transformers
+FlagEmbedding
+transformers
+
+# Vector database
+pymilvus
+
+# Web search (Tavily via MCP)
+mcp
+duckduckgo-search
+
+# Utilities
+pydantic>=2.0
+pillow
+numpy
+
+# UI (optional)
+streamlit
+
+langchain-mcp-adapters
