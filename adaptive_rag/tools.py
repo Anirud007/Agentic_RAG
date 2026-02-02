@@ -237,8 +237,30 @@ def image_retrieve(question: str, limit: int = 5, thread_id: str | None = None) 
 _tavily_mcp_tools_cache: list[Any] | None = None
 
 
+TAVILY_TIME_RANGE_VALID = ("day", "week", "month", "year")
+
+
+def _normalize_tavily_search_input(input_dict: dict[str, Any]) -> dict[str, Any]:
+    """Ensure Tavily search gets valid args: time_range, and max_results (not top_k/topn)."""
+    inp = dict(input_dict)
+    # Map top_k or topn -> max_results (agent may send either; Tavily API expects max_results)
+    for key in ("top_k", "topn"):
+        if key in inp:
+            if "max_results" not in inp:
+                inp["max_results"] = inp[key]
+            del inp[key]
+    # Fix time_range
+    tr = inp.get("time_range")
+    if not tr or (isinstance(tr, str) and tr.strip() not in TAVILY_TIME_RANGE_VALID):
+        inp["time_range"] = "year"
+    return inp
+
+
 def _run_async_tool_sync(tool: BaseTool, input_dict: dict[str, Any]) -> Any:
     """Run tool.ainvoke() in a new thread so sync callers (e.g. agent) can use it."""
+    name = getattr(tool, "name", "")
+    if name in ("tavily-search", "tavily_search"):
+        input_dict = _normalize_tavily_search_input(input_dict)
     result_holder: list[Any] = []
 
     def _run():
