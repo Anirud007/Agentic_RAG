@@ -1,0 +1,9 @@
+{
+    "dependencies": [
+        ".."
+    ],
+    "graphs": {
+        "adaptive_rag": "./graph.py:studio_graph"
+    },
+    "env": "../.env"
+}

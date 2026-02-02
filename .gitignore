@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.coverage
+.cache/
+__MACOSX/
+
+# Environments and local data
+venv/
+.env
+milvus_data/
+
+# Node / OS
+node_modules/
+.DS_Store
+
+# Build artifacts
+build/
+data/
+
